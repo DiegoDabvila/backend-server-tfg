@@ -16,7 +16,7 @@ export const getUsers = async (_, res: Response) => {
 };
 
 export const createUser = async (req: Request, res: Response) => {
-  const { name, username, password, surnames } = req.body;
+  const { name, username, password, surnames, isAdmin } = req.body;
   const cryptoPassword = crypto
     .createHash("sha256")
     .update(password)
@@ -27,6 +27,7 @@ export const createUser = async (req: Request, res: Response) => {
       username,
       surnames,
       password: cryptoPassword,
+      isAdmin
     },
   });
   res.json(users);
