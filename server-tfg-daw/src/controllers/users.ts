@@ -41,3 +41,20 @@ export const deleteUser = async (req: Request, res: Response) => {
 
   res.status(202).json(deleted);
 };
+
+
+export const updateUser = async (req: Request, res: Response) => {
+  const {name, username, surnames, isAdmin} = req.body;
+
+  const updated = await prisma.user.update({
+    data: {
+      name,
+      username,
+      surnames,
+      isAdmin
+    },
+    where: { id: parseInt(req.params.id) },
+  })
+  res.json(updated);
+
+}
