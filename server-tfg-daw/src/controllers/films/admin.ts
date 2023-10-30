@@ -23,8 +23,7 @@ export const getAllFilms = async (_, res: Response) => {
               id: true,
               username: true,
               name: true,
-              surnames: true,
-              isAdmin: true,
+              surnames: true
             },
           },
         },
