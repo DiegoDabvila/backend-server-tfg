@@ -3,7 +3,6 @@ import crypto from "crypto";
 import jwt from "jsonwebtoken";
 import { prisma } from "../index";
 import { LoginRequestBodyInterface } from "./interfaces/controllers.interface";
-import { token } from "morgan";
 
 
 
