@@ -31,6 +31,8 @@ export const login = async (req: Request<LoginRequestBodyInterface>, res: Respon
     },
   });
 
+  console.log(user);
+
   if (!user) {
     res.status(401).json({
       status: "error",
