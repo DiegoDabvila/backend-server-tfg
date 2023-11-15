@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { User } from "../middleware/authentication";
+import {User} from "@prisma/client";
 
 export const checkAdmin = (req: Request, res: Response, next: NextFunction) => {
   if (!req.user) {
