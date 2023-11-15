@@ -3,6 +3,7 @@ import crypto from "crypto";
 import jwt from "jsonwebtoken";
 import { prisma } from "../index";
 import { LoginRequestBodyInterface } from "./interfaces/controllers.interface";
+import { ExtractJwt } from "passport-jwt";
 
 
 
@@ -52,9 +53,10 @@ export const login = async (req: Request<LoginRequestBodyInterface>, res: Respon
 };
 
 
-export const verifyToken = async (req: Request<{token: string}>, res: Response) => {
-  const token = req.body.token;
-  const secretKey = process.env.JWT_KEY as string; 
+export const verifyToken = async (req: Request, res: Response) => {
+  const token = ExtractJwt.fromAuthHeaderAsBearerToken()(req)
+
+ const secretKey = process.env.JWT_KEY as string;
 
   try {
     if (!token) {
