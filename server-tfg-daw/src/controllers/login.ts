@@ -7,6 +7,7 @@ import { LoginRequestBodyInterface } from "./interfaces/controllers.interface";
 
 
 export const login = async (req: Request<LoginRequestBodyInterface>, res: Response) => {
+  console.log(req.body);
   if (!req.body.user || !req.body.password) {
     res.status(400).json({
       status: "error",
