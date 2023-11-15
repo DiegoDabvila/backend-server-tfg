@@ -3,6 +3,7 @@ import crypto from "crypto";
 import jwt from "jsonwebtoken";
 import { prisma } from "../index";
 import { LoginRequestBodyInterface } from "./interfaces/controllers.interface";
+import { token } from "morgan";
 
 
 
@@ -47,3 +48,21 @@ export const login = async (req: Request<LoginRequestBodyInterface>, res: Respon
     token,
   });
 };
+
+
+export const verifyToken = async (req: Request<{token: string}>, res: Response) => {
+  const token = req.body.token;
+  const secretKey = process.env.JWT_KEY as string; 
+
+  try {
+    if (!token) {
+      return res.status(401).json({ message: 'No token provided' });
+    }
+
+    const decoded = jwt.verify(token, secretKey);
+    
+    return res.status(200).json(decoded);
+  } catch (error) {
+    return res.status(403).json({ message: 'Invalid token' });
+  }
+}
