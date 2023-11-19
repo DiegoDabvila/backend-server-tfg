@@ -52,6 +52,24 @@ export const login = async (req: Request<LoginRequestBodyInterface>, res: Respon
   });
 };
 
+export const register = async (req: Request, res: Response) => {
+  const { name, username, password, surnames } = req.body;
+  const cryptoPassword = crypto
+    .createHash("sha256")
+    .update(password)
+    .digest("hex");
+  const users = await prisma.user.create({
+    data: {
+      name,
+      username,
+      surnames,
+      password: cryptoPassword,
+      isAdmin: false
+    },
+  });
+  res.json(users);
+};
+
 
 export const verifyToken = async (req: Request, res: Response) => {
   const token = ExtractJwt.fromAuthHeaderAsBearerToken()(req)
