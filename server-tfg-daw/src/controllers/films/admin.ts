@@ -118,15 +118,14 @@ export const postNewFilm = async (req: Request, res: Response) => {
 };
 
 export const updateFilm = async (req: Request, res: Response) => {
-  const { name, year, score, imageUrl, directorId } =
+  const { name, year, score, imageUrl } =
     req.body as UpdateFilmBody;
   const movie = await prisma.rentedMovie.update({
     data: {
       name,
       year,
       score,
-      imageUrl,
-      directorId: directorId,
+      imageUrl
     },
     where: {
       id: parseInt(req.params.id),
