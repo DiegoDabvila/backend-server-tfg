@@ -3,10 +3,10 @@ import { getFilms } from "../controllers/films";
 import {
   deleteFilm,
   deleteFilms,
-  getAllFilms,
+  getAllFilms, getFilmById,
   postNewFilm,
   relationUser,
-  updateFilm,
+  updateFilm
 } from "../controllers/films/admin";
 import { checkAdmin } from "../utils/roles";
 
@@ -16,6 +16,7 @@ filmsRouter.get("/", getFilms);
 
 filmsRouter.get("/admin", checkAdmin, getAllFilms);
 filmsRouter.post("/admin", checkAdmin, postNewFilm);
+filmsRouter.get("/admin/:id", checkAdmin, getFilmById);
 filmsRouter.put("/admin/:id", checkAdmin, updateFilm);
 filmsRouter.delete("/admin/:id", checkAdmin, deleteFilm);
 filmsRouter.post("/admin/delete", checkAdmin, deleteFilms);

@@ -35,6 +35,39 @@ export const getAllFilms = async (_, res: Response) => {
   res.status(200).json(movies);
 };
 
+export const getFilmById = async (req: Request, res: Response) => {
+  const {id} = req.params;
+  console.log(id);
+  try {
+    const movie = await prisma.rentedMovie.findUnique({
+      where: {
+        id: parseInt(id)
+      },
+      include: {
+        director: true,
+        users: {
+          include: {
+            user: {
+              select: {
+                id: true,
+                username: true,
+                name: true,
+                surnames: true
+              }
+            }
+          }
+        }
+      }
+    });
+    if (!movie) {
+      return res.status(404).json({error: "La película no fue encontrada"});
+    }
+    return res.status(200).json(movie);
+  }catch (error) {
+    return res.status(500).json({error: "Error al buscar la película"});
+  }
+}
+
 export const postNewFilm = async (req: Request, res: Response) => {
   const { name, year, score, imageUrl, directorId, director } =
     req.body as NewFilmResquest;
